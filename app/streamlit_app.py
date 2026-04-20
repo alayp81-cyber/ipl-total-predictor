@@ -24,13 +24,8 @@ st.markdown("""
     background: linear-gradient(180deg, #0b1f4d 0%, #102b6a 100%);
 }
 
-/* Main Title */
-h1 {
-    color: white !important;
-}
-
-/* Section Titles */
-h2, h3 {
+/* Titles */
+h1, h2, h3 {
     color: white !important;
 }
 
@@ -38,11 +33,6 @@ h2, h3 {
 label {
     color: white !important;
     font-weight: 600;
-}
-
-/* Success/info text */
-[data-testid="stMarkdownContainer"] p {
-    color: white;
 }
 
 /* Buttons */
@@ -69,11 +59,11 @@ div[data-testid="stMetric"] {
 """, unsafe_allow_html=True)
 
 # ---------------------------------------
-# Paths
+# RELATIVE PATHS (Cloud Safe)
 # ---------------------------------------
 
-MODEL_PATH = "/Users/alay/Desktop/ipl_total_predictior/models/random_forest_model_with_xi.pkl"
-FEATURE_DATA_PATH = "/Users/alay/Desktop/ipl_total_predictior/data/features/match_feature_view_with_xi.csv"
+MODEL_PATH = "models/random_forest_model_with_xi.pkl"
+FEATURE_DATA_PATH = "data/features/match_feature_view_with_xi.csv"
 
 # ---------------------------------------
 # Load Model
@@ -86,7 +76,7 @@ def load_model():
     return model
 
 # ---------------------------------------
-# Load Feature Dataset
+# Load Data
 # ---------------------------------------
 
 @st.cache_data
@@ -123,10 +113,11 @@ TEAM_COLORS = {
 }
 
 # ---------------------------------------
-# Helper: prediction range from RF trees
+# Range Calculation
 # ---------------------------------------
 
 def get_prediction_range(rf_model, X_input):
+
     x_array = X_input.to_numpy()
 
     tree_preds = np.array([
@@ -140,7 +131,7 @@ def get_prediction_range(rf_model, X_input):
     low = mean_pred - std_pred
     high = mean_pred + std_pred
 
-    return mean_pred, low, high, std_pred
+    return mean_pred, low, high
 
 # ---------------------------------------
 # Title
@@ -148,21 +139,18 @@ def get_prediction_range(rf_model, X_input):
 
 st.title("🏏 IPL Match Total Predictor")
 
-st.markdown(
-"Predict total match runs using teams, venue, toss and historical patterns."
-)
-
-st.success("✅ Model and feature data loaded")
+st.success("✅ Model and data loaded")
 
 st.markdown("---")
 
 # ---------------------------------------
-# Inputs Layout
+# Inputs
 # ---------------------------------------
 
 col1, col2 = st.columns(2)
 
 with col1:
+
     season = st.number_input(
         "Season",
         min_value=2018,
@@ -175,10 +163,11 @@ with col1:
     venue = st.selectbox("Venue", VENUES)
 
 with col2:
+
     team2 = st.selectbox(
         "Team 2",
         TEAMS,
-        index=1 if len(TEAMS) > 1 else 0
+        index=1
     )
 
     toss_winner = st.selectbox(
@@ -194,19 +183,13 @@ with col2:
 st.markdown("---")
 
 # ---------------------------------------
-# Validation
-# ---------------------------------------
-
-if team1 == team2:
-    st.error("Team 1 and Team 2 must be different.")
-
-# ---------------------------------------
 # Prediction
 # ---------------------------------------
 
 if st.button("Predict Match Total"):
 
     if team1 == team2:
+        st.error("Teams must be different.")
         st.stop()
 
     template = feature_df[
@@ -237,16 +220,18 @@ if st.button("Predict Match Total"):
     model_features = model.feature_names_in_
     X_input = X_input[model_features]
 
-    prediction, low, high, std_pred = get_prediction_range(model, X_input)
+    prediction, low, high = get_prediction_range(
+        model,
+        X_input
+    )
 
+    prediction = round(prediction)
     low = round(low)
     high = round(high)
-    prediction = round(prediction)
 
-    if low > prediction:
-        low = prediction
-    if high < prediction:
-        high = prediction
+    # ---------------------------------------
+    # Banner
+    # ---------------------------------------
 
     team1_color = TEAM_COLORS.get(team1, "#ffffff")
     team2_color = TEAM_COLORS.get(team2, "#ffffff")
@@ -282,20 +267,16 @@ if st.button("Predict Match Total"):
 
     st.markdown("## 🎯 Predicted Total")
 
-    col_a, col_b = st.columns(2)
+    c1, c2 = st.columns(2)
 
-    with col_a:
+    with c1:
         st.metric(
-            label="Expected Match Runs",
-            value=f"{prediction} runs"
+            "Expected Runs",
+            f"{prediction}"
         )
 
-    with col_b:
+    with c2:
         st.metric(
-            label="Predicted Range",
-            value=f"{low}–{high}"
+            "Predicted Range",
+            f"{low}–{high}"
         )
-
-    st.caption(
-        "Range is an estimated prediction band based on the spread of Random Forest tree outputs."
-    )
