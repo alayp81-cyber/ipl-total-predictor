@@ -1,0 +1,72 @@
+{
+    "maharaja yadavindra singh international cricket stadium, mullanpur": {
+        "matches_used": 10,
+        "range_half_width": 81,
+        "source": "global_fallback"
+    },
+    "eden gardens": {
+        "matches_used": 15,
+        "range_half_width": 69,
+        "source": "venue_specific"
+    },
+    "sawai mansingh stadium, jaipur": {
+        "matches_used": 11,
+        "range_half_width": 81,
+        "source": "global_fallback"
+    },
+    "narendra modi stadium": {
+        "matches_used": 18,
+        "range_half_width": 68,
+        "source": "venue_specific"
+    },
+    "ma chidambaram stadium, chepauk, chennai": {
+        "matches_used": 17,
+        "range_half_width": 80,
+        "source": "venue_specific"
+    },
+    "rajiv gandhi international stadium, uppal, hyderabad": {
+        "matches_used": 13,
+        "range_half_width": 81,
+        "source": "global_fallback"
+    },
+    "bharat ratna shri atal bihari vajpayee ekana cricket stadium, lucknow": {
+        "matches_used": 17,
+        "range_half_width": 65,
+        "source": "venue_specific"
+    },
+    "dr. y.s. rajasekhara reddy aca-vdca cricket stadium, visakhapatnam": {
+        "matches_used": 4,
+        "range_half_width": 81,
+        "source": "global_fallback"
+    },
+    "wankhede stadium": {
+        "matches_used": 17,
+        "range_half_width": 98,
+        "source": "venue_specific"
+    },
+    "m chinnaswamy stadium, bengaluru": {
+        "matches_used": 12,
+        "range_half_width": 81,
+        "source": "global_fallback"
+    },
+    "arun jaitley stadium": {
+        "matches_used": 13,
+        "range_half_width": 81,
+        "source": "global_fallback"
+    },
+    "himachal pradesh cricket association stadium, dharamsala": {
+        "matches_used": 3,
+        "range_half_width": 81,
+        "source": "global_fallback"
+    },
+    "barsapara cricket stadium, guwahati": {
+        "matches_used": 6,
+        "range_half_width": 81,
+        "source": "global_fallback"
+    },
+    "maharaja yadavindra singh international cricket stadium, new chandigarh": {
+        "matches_used": 3,
+        "range_half_width": 81,
+        "source": "global_fallback"
+    }
+}
