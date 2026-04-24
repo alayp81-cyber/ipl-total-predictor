@@ -1,0 +1,11 @@
+{
+    "mae": 54.36,
+    "p50_abs_error": 44.69,
+    "p75_abs_error": 80.6,
+    "p80_abs_error": 87.0,
+    "p90_abs_error": 114.21,
+    "range_half_width": 81,
+    "test_start_season": 2024,
+    "test_end_season": 2026,
+    "test_rows": 159
+}
